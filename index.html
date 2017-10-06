@@ -1,0 +1,46 @@
+<title>Choose a Pokemon!</title>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+</head>
+<body>
+
+
+    <p>Pokedex</p>
+    <select id="numberSelected" class="1-151"></select>
+    <div id="pokemonImage" />
+    <div id="pokemonName">No Sentence</div>
+
+    <script>
+        $(function(){
+            var $select = $(".1-151");
+            for (i=1;i<=151;i++){
+                $select.append($('<option></option>').val(i).html(i))
+            }
+        })
+    </script>
+
+    <script>
+
+        var num = numberSelected.value;
+        console.log(numberSelected);
+        var myurl = "http://pokeapi.co/api/v2/pokemon/" + num;
+        console.log(myurl);
+
+  $.ajax({
+    url : myurl,
+    crossDomain: true,
+    dataType : "jsonp",
+    success : function(parsed_json) {
+      $("#pokemonName").append(
+            $("<h1/>").text(parsed_json.title),
+            $("<img/>").attr({
+                src: parsed_json.img,
+                title: parsed_json.alt,
+                alt: parsed_json.title
+            })
+        );
+    }
+  });
+    </script>
+
+
