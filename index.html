@@ -7,8 +7,10 @@
 
     <p>Pokemon Army</p>
     <select id="numberSelected" class="1-151"></select>
-    <div id="pokemon" />
+    <br />
     <button id="theButton" title="Grab Pokemon" onclick="pressBtn()">Grab this Pokemon</button>
+    <div id="namePok"/>
+    <br />
 
     <script>
         $(function(){
@@ -23,23 +25,25 @@
         function pressBtn() {
             $(function () {
                 var num = $("#numberSelected").val();
-                var myurl = "http://pokeapi.co/api/v2/pokemon/" + num + "/";
+                //had to add this cors anywhere to get the object to load...
+                var myurl = "http://cors-anywhere.herokuapp.com/pokeapi.co/api/v2/pokemon/" + num + "/";
 
                 $.ajax({
                     url: myurl,
                     crossDomain: true,
-                    dataType: "jsonp",
+                    type: "GET",
+                    dataType: "json",
                     success: function (parsed_json) {
                         console.log(parsed_json);
-                        $("#pokemon").append(
-                              $("<h1/>").text(parsed_json['name'])
-                          );
+                        $("#namePok").html(
+                          $("<h1/>").text(parsed_json['name'])
+                          ).append(
+                          $("<img/>").attr({
+                              src: "/pokemon/sprites/" + num + ".png"
+                          }))
+                       
                     }
-                });
-                
-                              $("#pokemon").append($("<img/>").attr({
-                                  src: "/sprites/" + num + ".png",
-                              }))
+                })
             })
         }
     </script>
