@@ -7,8 +7,8 @@
 
     <p>Pokedex</p>
     <select id="numberSelected" class="1-151"></select>
-    <div id="pokemonImage" />
-    <div id="pokemonName">No Sentence</div>
+    <div id="pokemon" />
+    <button id="theButton" title="Grab Pokemon" onclick="pressBtn()">Grab this Pokemon</button>
 
     <script>
         $(function(){
@@ -20,27 +20,30 @@
     </script>
 
     <script>
+        function pressBtn() {
+            $(function () {
+                var num = $("#numberSelected").val();
+                console.log(numberSelected);
+                var myurl = "http://pokeapi.co/api/v2/pokemon/" + num + "/";
+                console.log(myurl);
 
-        var num = numberSelected.value;
-        console.log(numberSelected);
-        var myurl = "http://pokeapi.co/api/v2/pokemon/" + num;
-        console.log(myurl);
-
-  $.ajax({
-    url : myurl,
-    crossDomain: true,
-    dataType : "jsonp",
-    success : function(parsed_json) {
-      $("#pokemonName").append(
-            $("<h1/>").text(parsed_json.title),
-            $("<img/>").attr({
-                src: parsed_json.img,
-                title: parsed_json.alt,
-                alt: parsed_json.title
+                $.ajax({
+                    url: myurl,
+                    crossDomain: true,
+                    dataType: "jsonp",
+                    success: function (parsed_json) {
+                        $("#pokemon").append(
+                              $("<h1/>").text(parsed_json.name),
+                              $("<img/>").attr({
+                                  src: "/sprites/" + num + ".png",
+                                  title: parsed_json.alt,
+                                  alt: parsed_json.title
+                              })
+                          );
+                    }
+                });
             })
-        );
-    }
-  });
+        }
     </script>
 
 
