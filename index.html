@@ -1,11 +1,11 @@
-<title>Choose a Pokemon!</title>
+<title>Choose a Pokemon Army!</title>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 </head>
 <body>
 
 
-    <p>Pokedex</p>
+    <p>Pokemon Army</p>
     <select id="numberSelected" class="1-151"></select>
     <div id="pokemon" />
     <button id="theButton" title="Grab Pokemon" onclick="pressBtn()">Grab this Pokemon</button>
@@ -23,25 +23,23 @@
         function pressBtn() {
             $(function () {
                 var num = $("#numberSelected").val();
-                console.log(numberSelected);
                 var myurl = "http://pokeapi.co/api/v2/pokemon/" + num + "/";
-                console.log(myurl);
 
                 $.ajax({
                     url: myurl,
                     crossDomain: true,
                     dataType: "jsonp",
                     success: function (parsed_json) {
+                        console.log(parsed_json);
                         $("#pokemon").append(
-                              $("<h1/>").text(parsed_json.name),
-                              $("<img/>").attr({
-                                  src: "/sprites/" + num + ".png",
-                                  title: parsed_json.alt,
-                                  alt: parsed_json.title
-                              })
+                              $("<h1/>").text(parsed_json['name'])
                           );
                     }
                 });
+                
+                              $("#pokemon").append($("<img/>").attr({
+                                  src: "/sprites/" + num + ".png",
+                              }))
             })
         }
     </script>
